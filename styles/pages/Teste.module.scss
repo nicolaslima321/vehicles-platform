@@ -1,0 +1,12 @@
+.teste {
+  align-content: center;
+  padding: 0 68px;
+
+  @media (max-width: 460px) {
+    padding: 12px;
+  }
+}
+
+.testeTable {
+  max-height: 70%;
+}

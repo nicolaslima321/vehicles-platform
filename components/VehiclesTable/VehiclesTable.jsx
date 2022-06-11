@@ -12,7 +12,7 @@ const defaultSizeProps = isMobile
   ? { minWidth: 160 }
   : { flex: 1 };
 
-export default function DataTable({ rows, onAllVehiclesSelected, onVehicleSelection }) {
+export default function DataTable({ rows, onVehicleSelection }) {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handlePopoverClick = (event) => {
@@ -92,10 +92,13 @@ export default function DataTable({ rows, onAllVehiclesSelected, onVehicleSelect
         sx={{
           '& .MuiCheckbox-root': {
             color: 'red !important',
+          },
+          '& .MuiDataGrid-columnHeaderCheckbox .MuiDataGrid-columnHeaderTitleContainer': {
+            display: 'none'
           }
         }}
         checkboxSelection
-        onSelectionModelChange={(e) => onAllVehiclesSelected(e)}
+        disableSelectionOnClick
         onCellClick={(e) => onVehicleSelection(e)}
       />
     </div>

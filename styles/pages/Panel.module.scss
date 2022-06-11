@@ -1,14 +1,10 @@
-.teste {
+.panel {
   align-content: center;
   padding: 0 68px;
 
   @media (max-width: $mobile-device) {
     padding: 12px;
   }
-}
-
-.testeButton {
-  width: 100em;
 }
 
 .panel__actions-group {

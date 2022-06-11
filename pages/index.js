@@ -1,10 +1,12 @@
-import Table from '../components/VehiclesTable/VehiclesTable';
-import Button from '../components/Button/Button';
+import Table from '/components/VehiclesTable/VehiclesTable';
+import Button from '/components/Button/Button';
 
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useMemo, useState } from 'react'
 
-import styles from '../styles/pages/Teste.module.scss';
+import { isObjectsEqual, refreshArrayMemoryReference } from '/utils'
+
+import styles from '/styles/pages/Panel.module.scss';
 
 function createData(
   driverIdentifier,
@@ -24,78 +26,63 @@ function createData(
   };
 }
 
-export default function Teste() {
-  const [hasVehicleSelected, setHasVehicleSelected] = useState(false);
-  let [vehiclesSelected, setVehiclesSelected] = useState([]);
+export default function Panel() {
+  const [canPerformVehicleAction, setCanPerformVehicleAction] = useState(false);
+  const [vehiclesSelected, setVehiclesSelected] = useState([]);
 
   const router = useRouter()
 
-  // useEffect(() => {
-  //   console.log('i entered here');
+  useMemo(() => {
+    const hasMoreThanOneVehicleSelected = vehiclesSelected.length > 1;
+    const hasNoneVehicleSelected = vehiclesSelected.length === 0;
 
-  //   if (vehiclesSelected && vehiclesSelected.length < 1) {
-  //     console.log('im empty');
-  //     setHasVehicleSelected(false);
-  //   } else {
-  //     console.log('im have some vehicles');
-  //     if (hasVehicleSelected) {
-  //       console.log('state is right, no changes need');
-  //       return;
-  //     }
-
-  //     console.log('adjusting state');
-  //     setHasVehicleSelected(true);
-  //   }
-  // }, [vehiclesSelected])
+    if (hasMoreThanOneVehicleSelected || hasNoneVehicleSelected) {
+      setCanPerformVehicleAction(false);
+    } else {
+      setCanPerformVehicleAction(true);
+    }
+  }, [vehiclesSelected])
 
   const onCreateVehicleClick = () => router.push('vehicle/creation');
 
-  const handleAllVehiclesSelection = (e) => {
-    if (e && e.length === rows.length) {
-      setHasVehicleSelected(true);
-      setVehiclesSelected(rows);
-    } else if (e && e.length === 0) {
-      setHasVehicleSelected(false);
-    }
-  }
-
-  const handleVehicleSelection = ({ row: selectedVehicle }) => {
+  const handleVehicleSelection = ({
+    row: selectedVehicle,
+    value: vehicleCellUnchecked,
+  }) => {
     let currentVehicles = vehiclesSelected;
-    console.log('started with', currentVehicles);
 
-    if (currentVehicles.includes(selectedVehicle)) {
+    if (vehicleCellUnchecked) {
       currentVehicles = removeAlreadySelectedVehicles(selectedVehicle);
     } else {
       currentVehicles.push(selectedVehicle);
     }
 
-    if (currentVehicles.length === 0) {
-      setHasVehicleSelected(false);
-    } else {
-      setHasVehicleSelected(true);
-    }
+    const newVehiclesSelected = refreshArrayMemoryReference(currentVehicles)
 
-    console.log('ended with', currentVehicles);
-
-    setVehiclesSelected(currentVehicles);
+    setVehiclesSelected(newVehiclesSelected);
   }
 
+
   const removeAlreadySelectedVehicles =
-    (selectedVehicle) => vehiclesSelected.filter((vehicle) => vehicle != selectedVehicle);
+    (selectedVehicle) => vehiclesSelected.filter((vehicle) => !isObjectsEqual(vehicle, selectedVehicle));
 
   const rows = [
     createData('Cupcake #12351', 305, 3.7, 67, 4.3, '26/03/2022'),
     createData('Cupcake #12352', 305, 3.7, 67, 4.3, '26/03/2022'),
     createData('Cupcake #12353', 305, 3.7, 67, 4.3, '26/03/2022'),
     createData('Cupcake #12354', 305, 3.7, 67, 4.3, '26/03/2022'),
+    createData('Cupcake #12355', 305, 3.7, 67, 4.3, '26/03/2022'),
+    createData('Cupcake #12356', 305, 3.7, 67, 4.3, '26/03/2022'),
+    createData('Cupcake #12357', 305, 3.7, 67, 4.3, '26/03/2022'),
+    createData('Cupcake #12358', 305, 3.7, 67, 4.3, '26/03/2022'),
+    createData('Cupcake #12359', 305, 3.7, 67, 4.3, '26/03/2022'),
   ];
 
   return (
-    <div className={styles.teste}>
+    <div className={styles.panel}>
       <Table
         className={`${styles['panel__vehicle-table']}`}
         rows={rows}
-        onAllVehiclesSelected={(e) => handleAllVehiclesSelection(e)}
         onVehicleSelection={(e) => handleVehicleSelection(e)}
       />
 
@@ -111,14 +98,14 @@ export default function Teste() {
         <div>
           <Button
             className={`${styles['panel__button']} spacingRightLarge`}
-            disabled={!hasVehicleSelected}
+            disabled={!canPerformVehicleAction}
           >
             {'Edit Vehicle'}
           </Button>
 
           <Button
             className={styles['panel__button']}
-            disabled={!hasVehicleSelected}
+            disabled={!canPerformVehicleAction}
           >
             {'Delete Vehicle'}
           </Button>

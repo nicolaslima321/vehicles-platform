@@ -1,7 +1,7 @@
 // Colors
 $primary-color: #ef404b;
 $secondary-color: #12CE66;
-$transparent: rgba(0, 0, 0, 1);
+$transparent: rgba(0, 0, 0, 0);
 
 // Size
 $size-extra-small: 16px;
@@ -25,6 +25,7 @@ $spacing-extra-giant: 64px;
 
 // Breakpoints
 $mobile-device: 460px;
+$tablet-device: 768px;
 
 // Font Size
 $font-extra-small: 0.5em;

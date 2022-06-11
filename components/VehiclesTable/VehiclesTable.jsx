@@ -3,34 +3,16 @@ import { useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import Popover from '@mui/material/Popover';
 import InfoIcon from '@mui/icons-material/InfoOutlined';
-import { IconButton, Typography } from '@mui/material';
+import { Checkbox, IconButton, Typography } from '@mui/material';
 import { isMobile } from 'react-device-detect';
 
-import styles from './VehiclesTable.module.scss';
+import './VehiclesTable.module.scss';
 
 const defaultSizeProps = isMobile
   ? { minWidth: 160 }
   : { flex: 1 };
 
-function createData(
-  driverIdentifier,
-  vehicleId,
-  vehicleModel,
-  vehicleType,
-  vehicleCapacity,
-  vehicleCreatedAt,
-) {
-  return {
-    id: driverIdentifier,
-    vehicleId,
-    vehicleModel,
-    vehicleType,
-    vehicleCapacity,
-    vehicleCreatedAt,
-  };
-}
-
-export default function DataTable() {
+export default function DataTable({ rows, onAllVehiclesSelected, onVehicleSelection }) {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handlePopoverClick = (event) => {
@@ -100,13 +82,6 @@ export default function DataTable() {
     },
   ];
 
-  const rows = [
-    createData('Cupcake #12351', 305, 3.7, 67, 4.3, '26/03/2022'),
-    createData('Cupcake #12352', 305, 3.7, 67, 4.3, '26/03/2022'),
-    createData('Cupcake #12353', 305, 3.7, 67, 4.3, '26/03/2022'),
-    createData('Cupcake #12354', 305, 3.7, 67, 4.3, '26/03/2022'),
-  ];
-
   return (
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
@@ -114,9 +89,14 @@ export default function DataTable() {
         columns={columns}
         pageSize={5}
         rowsPerPageOptions={[5]}
+        sx={{
+          '& .MuiCheckbox-root': {
+            color: 'red !important',
+          }
+        }}
         checkboxSelection
-        onCellClick={(e) => console.log(e)}
-        onSelectionModelChange={(e) => console.log(e)}
+        onSelectionModelChange={(e) => onAllVehiclesSelected(e)}
+        onCellClick={(e) => onVehicleSelection(e)}
       />
     </div>
   );

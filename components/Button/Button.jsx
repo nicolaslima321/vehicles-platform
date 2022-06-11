@@ -1,12 +1,13 @@
 import * as React from 'react';
 
-import './Button.module.scss';
+import styles from './Button.module.scss';
 
 export default function Button({
   ariaLabel,
   className = '',
   children,
   color = 'primary',
+  disabled = false,
   role,
   onClick,
   variant = '',
@@ -14,9 +15,10 @@ export default function Button({
 
   function getCompleteClassName() {
     const colorClass = `button--${color}`;
-    console.log(colorClass);
+    const variantClass = `button--${variant}`;
+    const customClass = className;
 
-    return `button ${colorClass} ${className} ${variant}`.trim();
+    return `${styles.button} ${styles[colorClass]} ${styles[variantClass]} ${customClass}`;
   }
 
   return (
@@ -25,6 +27,7 @@ export default function Button({
       aria-label={ariaLabel}
       role={role}
       onClick={onClick}
+      disabled={disabled}
     >
       {children}
     </button>

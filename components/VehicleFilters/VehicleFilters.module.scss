@@ -1,0 +1,58 @@
+.vehicle-filters {
+  flex-direction: column;
+  display: flex;
+}
+
+.vehicle-filters__options {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: $spacing-extra-large;
+
+  @media (max-width: $mobile-device) {
+    flex-wrap: nowrap;
+  }
+}
+
+.vehicle-filters__options-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  &:last-child {
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  @media (max-width: 1024px) {
+    width: 80%;
+
+    &:last-child {
+      width: 120%;
+      margin-left: $spacing-small;
+    }
+  }
+}
+
+.vehicle-filters__option-field {
+  width: $size-extra-large;
+  margin-bottom: $spacing-medium;
+
+  @media (max-width: $mobile-device) {
+    width: calc($size-medium * 1.65);
+  }
+}
+
+.vehicle-filters__option-field-small {
+  width: $size-large;
+  margin-right: $spacing-large;
+
+  @media (max-width: $mobile-device) {
+    width: $size-medium;
+
+    &:nth-child(odd) {
+      margin-right: $spacing-medium;
+    }
+  }
+}

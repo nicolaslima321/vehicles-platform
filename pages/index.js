@@ -7,6 +7,7 @@ import { useMemo, useState } from 'react'
 import { isObjectsEqual, refreshArrayMemoryReference } from '/utils'
 
 import styles from '/styles/pages/Panel.module.scss';
+import VehicleFilters from '../components/VehicleFilters/VehicleFilters';
 
 function createData(
   driverIdentifier,
@@ -80,6 +81,7 @@ export default function Panel() {
 
   return (
     <div className={styles.panel}>
+      <VehicleFilters />
       <Table
         className={`${styles['panel__vehicle-table']}`}
         rows={rows}

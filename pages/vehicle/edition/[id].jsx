@@ -8,6 +8,7 @@ import vehicleApi from '../../../api/vehicle';
 
 export default function Edition() {
   const [drivers, setDrivers] = useState({});
+  const [vehicleId, setVehicleId] = useState(0);
   const [selectedDriverId, setSelectedDriverId] = useState({});
   const [selectedDriver, setSelectedDriver] = useState({});
   const [displayPhrase, setDisplayPhrase] = useState(false);
@@ -54,6 +55,7 @@ export default function Edition() {
       capacity,
     } = await vehicleApi.find(id);
 
+    setVehicleId(id);
     setSelectedDriverId(driverId);
     setPlate(plate);
     setModel(model);
@@ -61,8 +63,16 @@ export default function Edition() {
     setCapacity(capacity);
   }
 
-  const onUpdateVehicleClick = async (params) => {
-    const created = await vehicleApi.update(selectedDriverId, params);
+  const onUpdateVehicleClick = async () => {
+    const params = {
+      driverId: selectedDriverId,
+      plate,
+      model,
+      type,
+      capacity,
+    };
+
+    const created = await vehicleApi.update(vehicleId, params);
 
     if (created) {
       window.alert('Vehicle successfully updated!');

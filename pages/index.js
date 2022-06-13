@@ -1,39 +1,45 @@
 import Table from '/components/VehiclesTable/VehiclesTable';
 import Button from '/components/Button/Button';
+import { Skeleton } from '@mui/material';
 
 import { useRouter } from 'next/router'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import axios from 'axios';
 
 import { isObjectsEqual, refreshArrayMemoryReference } from '/utils'
 
 import styles from '/styles/pages/Panel.module.scss';
 import VehicleFilters from '../components/VehicleFilters/VehicleFilters';
-
-function createData(
-  driverIdentifier,
-  vehicleId,
-  vehicleModel,
-  vehicleType,
-  vehicleCapacity,
-  vehicleCreatedAt,
-) {
-  return {
-    id: driverIdentifier,
-    vehicleId,
-    vehicleModel,
-    vehicleType,
-    vehicleCapacity,
-    vehicleCreatedAt,
-  };
-}
+import vehicleApi from '../api/vehicle';
 
 export default function Panel() {
+  const [filterOptions, setFilterOptions] = useState({});
   const [canPerformVehicleAction, setCanPerformVehicleAction] = useState(false);
+  const [foundVehicles, setFoundVehicles] = useState([]);
   const [vehiclesSelected, setVehiclesSelected] = useState([]);
+  const [vehiclesRows, setVehiclesRows] = useState([]);
+  const [isLoadingVehicles, setIsLoadingVehicles] = useState(true);
+  const [isFirstRendering, setIsFirstRendering] = useState(true);
+  const [resetVehicleTable, setResetVehicleTable] = useState(false);
 
-  const router = useRouter()
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isFirstRendering) {
+      console.log('first rendering');
+      setIsFirstRendering(false);
+      searchVehicles()
+    }
+
+    if (!isLoadingVehicles && foundVehicles.length > 0) {
+      const mappedVehicles = foundVehicles.map((vehicle, index) => mountVehicleRow(vehicle));
+      setVehiclesRows(mappedVehicles);
+    }
+  }, [foundVehicles])
 
   useMemo(() => {
+    console.log('vehicles selected changed');
+
     const hasMoreThanOneVehicleSelected = vehiclesSelected.length > 1;
     const hasNoneVehicleSelected = vehiclesSelected.length === 0;
 
@@ -44,7 +50,56 @@ export default function Panel() {
     }
   }, [vehiclesSelected])
 
+  const mountVehicleRow = ({ creationDate, drivers, ...vehiclesProps }, index) => {
+    let driverIdentifier = '';
+
+    if (drivers && drivers.length > 0) {
+      const [{ id, firstName, lastName }] = drivers;
+      driverIdentifier = `${firstName} ${lastName} #${id}`;
+    } else {
+      // Reason: There are some Vehicles in the Database that doesnt have drivers
+      // So I decided to identify by that form
+      driverIdentifier = `Non existing driver`;
+    }
+
+    return {
+      ...vehiclesProps,
+      creationDate: new Date(creationDate).toLocaleDateString(),
+      driverIdentifier,
+      index,
+    };
+  }
+
+
   const onCreateVehicleClick = () => router.push('vehicle/creation');
+  const onEditVehicleClick = () => {
+    const currentVehicle = vehiclesSelected[0];
+    router.push({
+      pathname: 'vehicle/edition/[id]',
+      query: { id: currentVehicle.id },
+    });
+  }
+
+  const onDeleteVehicleClick = () => deleteVehicle();
+
+  const deleteVehicle = async () => {
+    const currentVehicle = vehiclesSelected[0];
+    await vehicleApi.delete(currentVehicle.id);
+  }
+
+  const onSearchVehiclesClick = () => searchVehicles();
+
+  const searchVehicles = async () => {
+    setVehiclesSelected([]);
+    setResetVehicleTable(true);
+    setIsLoadingVehicles(true);
+
+    const vehicles = await vehicleApi.fetchAll(filterOptions);
+
+    setFoundVehicles(vehicles);
+    setIsLoadingVehicles(false);
+    setResetVehicleTable(false);
+  }
 
   const handleVehicleSelection = ({
     row: selectedVehicle,
@@ -63,43 +118,46 @@ export default function Panel() {
     setVehiclesSelected(newVehiclesSelected);
   }
 
-
   const removeAlreadySelectedVehicles =
     (selectedVehicle) => vehiclesSelected.filter((vehicle) => !isObjectsEqual(vehicle, selectedVehicle));
 
-  const rows = [
-    createData('Cupcake #12351', 305, 3.7, 67, 4.3, '26/03/2022'),
-    createData('Cupcake #12352', 305, 3.7, 67, 4.3, '26/03/2022'),
-    createData('Cupcake #12353', 305, 3.7, 67, 4.3, '26/03/2022'),
-    createData('Cupcake #12354', 305, 3.7, 67, 4.3, '26/03/2022'),
-    createData('Cupcake #12355', 305, 3.7, 67, 4.3, '26/03/2022'),
-    createData('Cupcake #12356', 305, 3.7, 67, 4.3, '26/03/2022'),
-    createData('Cupcake #12357', 305, 3.7, 67, 4.3, '26/03/2022'),
-    createData('Cupcake #12358', 305, 3.7, 67, 4.3, '26/03/2022'),
-    createData('Cupcake #12359', 305, 3.7, 67, 4.3, '26/03/2022'),
-  ];
-
   return (
     <div className={styles.panel}>
-      <VehicleFilters />
+      <VehicleFilters onOptionsChanged={(options) => setFilterOptions(options)} />
+
+      {isLoadingVehicles && <Skeleton variant="rectangular" width={210} height={118} />}
+
       <Table
         className={`${styles['panel__vehicle-table']}`}
-        rows={rows}
+        rows={vehiclesRows}
+        resetVehicleTable={resetVehicleTable}
         onVehicleSelection={(e) => handleVehicleSelection(e)}
       />
 
       <div className={styles['panel__actions-group']}>
-        <Button
-          className={styles['panel__button']}
-          variant='filled'
-          onClick={() => onCreateVehicleClick()}
-        >
-          {'Create Vehicle'}
-        </Button>
-
-        <div>
+        <div className={styles['panel__actions-button-group']}>
           <Button
             className={`${styles['panel__button']} spacingRightLarge`}
+            color='secondary'
+            variant='filled'
+            onClick={() => onSearchVehiclesClick()}
+          >
+            {'Search Vehicles'}
+          </Button>
+
+          <Button
+            className={styles['panel__button']}
+            variant='filled'
+            onClick={() => onCreateVehicleClick()}
+          >
+            {'Create Vehicle'}
+          </Button>
+        </div>
+
+        <div className={styles['panel__actions-button-group']}>
+          <Button
+            className={`${styles['panel__button']} spacingRightLarge`}
+            onClick={() => onEditVehicleClick()}
             disabled={!canPerformVehicleAction}
           >
             {'Edit Vehicle'}
@@ -107,6 +165,7 @@ export default function Panel() {
 
           <Button
             className={styles['panel__button']}
+            onClick={() => onDeleteVehicleClick()}
             disabled={!canPerformVehicleAction}
           >
             {'Delete Vehicle'}

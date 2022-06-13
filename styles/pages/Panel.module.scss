@@ -12,9 +12,17 @@
   justify-content: space-between;
   margin-top: $spacing-large;
 
-  @media (max-width: $mobile-device), (max-width: $tablet-device) {
+  @media (max-width: $laptop-sm) {
     flex-direction: column;
     margin-top: $spacing-medium;
+  }
+}
+
+.panel__actions-button-group {
+  margin-bottom: 0;
+
+  @media (max-width: $laptop-sm) {
+    margin-bottom: $spacing-medium;
   }
 }
 
@@ -26,7 +34,7 @@
 .panel__button {
   width: $size-extra-large;
 
-  @media (max-width: $mobile-device), (max-width: $tablet-device) {
+  @media (max-width: $laptop-sm) {
     width: 100%;
     margin-bottom: $spacing-medium;
 

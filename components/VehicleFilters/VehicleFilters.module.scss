@@ -6,6 +6,7 @@
 .vehicle-filters__options {
   display: flex;
   width: 100%;
+  flex-direction: column;
   justify-content: space-between;
   margin-bottom: $spacing-extra-large;
 
@@ -15,23 +16,15 @@
 }
 
 .vehicle-filters__options-group {
+  align-items: flex-start;
   display: flex;
-  flex-direction: column;
-  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 60%;
 
-  &:last-child {
-    flex-direction: row;
-    flex-wrap: wrap;
+  @media (max-width: 1240px) {
     width: 100%;
-  }
-
-  @media (max-width: 1024px) {
-    width: 80%;
-
-    &:last-child {
-      width: 120%;
-      margin-left: $spacing-small;
-    }
   }
 }
 
@@ -40,19 +33,16 @@
   margin-bottom: $spacing-medium;
 
   @media (max-width: $mobile-device) {
-    width: calc($size-medium * 1.65);
+    width: 100%;
   }
 }
 
 .vehicle-filters__option-field-small {
   width: $size-large;
-  margin-right: $spacing-large;
 
   @media (max-width: $mobile-device) {
-    width: $size-medium;
-
-    &:nth-child(odd) {
-      margin-right: $spacing-medium;
+    &:nth-child(1n) {
+      margin-bottom: $spacing-medium;
     }
   }
 }

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import Popover from '@mui/material/Popover';
 import InfoIcon from '@mui/icons-material/InfoOutlined';
@@ -12,8 +12,17 @@ const defaultSizeProps = isMobile
   ? { minWidth: 160 }
   : { flex: 1 };
 
-export default function DataTable({ rows, onVehicleSelection }) {
+export default function DataTable({ rows, resetVehicleTable, onVehicleSelection }) {
+  const [vehiclesRows, setVehiclesRows] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
+
+  useEffect(() => {
+    if (resetVehicleTable) {
+      setVehiclesRows([]);
+    } else {
+      setVehiclesRows(rows);
+    }
+  }, [rows, resetVehicleTable]);
 
   const handlePopoverClick = (event) => {
     event.stopPropagation();
@@ -30,7 +39,7 @@ export default function DataTable({ rows, onVehicleSelection }) {
   const columns = [
     {
       ...defaultSizeProps,
-      field: 'id',
+      field: 'driverIdentifier',
       headerName: 'Driver Identifier',
       renderHeader: () => {
         return (
@@ -57,48 +66,56 @@ export default function DataTable({ rows, onVehicleSelection }) {
     },
     {
       ...defaultSizeProps,
-      field: 'vehicleId',
-      headerName: 'Vehicle ID'
+      field: 'id',
+      headerName: 'ID'
     },
     {
       ...defaultSizeProps,
-      field: 'vehicleModel',
-      headerName: 'Vehicle Model',
+      field: 'model',
+      headerName: 'Model',
     },
     {
       ...defaultSizeProps,
-      field: 'vehicleType',
-      headerName: 'Vehicle Type'
+      field: 'type',
+      headerName: 'Type'
     },
     {
       ...defaultSizeProps,
-      field: 'vehicleCapacity',
-      headerName: 'Vehicle Capacity'
+      field: 'capacity',
+      headerName: 'Capacity'
     },
     {
       ...defaultSizeProps,
-      field: 'vehicleCreatedAt',
-      headerName: 'Creation Date'
+      field: 'creationDate',
+      headerName: 'Created in'
     },
   ];
 
   return (
-    <div style={{ height: 400, width: '100%' }}>
+    <div style={{ width: '100%' }}>
+      <Typography sx={{ marginBottom: 2 }} variant="h6">Vehicles:</Typography>
+
       <DataGrid
-        rows={rows}
+        rows={vehiclesRows}
         columns={columns}
         pageSize={5}
         rowsPerPageOptions={[5]}
         sx={{
+          height: 400,
           '& .MuiCheckbox-root': {
             color: 'red !important',
           },
+          '& .MuiDataGrid-iconButtonContainer': {
+            display: 'none',
+          },
           '& .MuiDataGrid-columnHeaderCheckbox .MuiDataGrid-columnHeaderTitleContainer': {
-            display: 'none'
+            display: 'none',
           }
         }}
         checkboxSelection
         disableSelectionOnClick
+        disableColumnFilter
+        disableColumnMenu
         onCellClick={(e) => onVehicleSelection(e)}
       />
     </div>

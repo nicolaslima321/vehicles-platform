@@ -126,14 +126,15 @@ export default function Panel() {
     <div className={styles.panel}>
       <VehicleFilters onOptionsChanged={(options) => setFilterOptions(options)} />
 
-      {isLoadingVehicles && <Skeleton variant="rectangular" width={210} height={118} />}
-
-      <Table
-        className={`${styles['panel__vehicle-table']}`}
-        rows={vehiclesRows}
-        resetVehicleTable={resetVehicleTable}
-        onVehicleSelection={(e) => handleVehicleSelection(e)}
-      />
+      {isLoadingVehicles && <Skeleton variant="rectangular" width={'100%'} height={400} />}
+      {!isLoadingVehicles &&
+        <Table
+          className={`${styles['panel__vehicle-table']}`}
+          rows={vehiclesRows}
+          resetVehicleTable={resetVehicleTable}
+          onVehicleSelection={(e) => handleVehicleSelection(e)}
+        />
+      }
 
       <div className={styles['panel__actions-group']}>
         <div className={styles['panel__actions-button-group']}>

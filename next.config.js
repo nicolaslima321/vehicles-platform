@@ -1,11 +1,16 @@
+const path = require('node:path');
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: {
-    apiUrl: 'http://localhost:8080/api',
+    apiUrl: process.env.NODE_ENV === 'production'
+      ? 'https://shippify-nicolas-challenge.herokuapp.com/'
+      : 'http://localhost:8080/api',
   },
   reactStrictMode: true,
   sassOptions: {
-    prependData: `@import "styles/variables.scss";`,
+    includePaths: [path.join(__dirname, 'styles')],
+    prependData: `@import "./variables.scss";`,
   }
 }
 

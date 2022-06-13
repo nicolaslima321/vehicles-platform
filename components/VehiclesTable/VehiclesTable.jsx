@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
 
 import { DataGrid } from '@mui/x-data-grid';
-import { IconButton, InfoOutlined as InfoIcon, Typography, Popover } from '@mui/material';
+
+import InfoIcon from '@mui/icons-material/InfoOutlined';
+import { IconButton, Typography, Popover } from '@mui/material';
+
 import { isMobile } from 'react-device-detect';
 
 const defaultSizeProps = isMobile

@@ -1,6 +1,10 @@
 .vehicle-filters {
   flex-direction: column;
   display: flex;
+
+  @media (max-width: $mobile-device) {
+    margin-top: calc($size-extra-large * 1.25);
+  }
 }
 
 .vehicle-filters__options {

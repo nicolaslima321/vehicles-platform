@@ -82,7 +82,14 @@ export default function Panel() {
 
   const deleteVehicle = async () => {
     const currentVehicle = vehiclesSelected[0];
-    await vehicleApi.delete(currentVehicle.id);
+    const deleted = await vehicleApi.delete(currentVehicle.id);
+
+    if (created) {
+      searchVehicles();
+      window.alert('Vehicle successfully deleted!');
+    } else {
+      window.alert('Could not delete vehicle! Try again');
+    }
   }
 
   const onSearchVehiclesClick = () => searchVehicles();

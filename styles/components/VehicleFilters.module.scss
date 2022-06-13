@@ -21,6 +21,7 @@
   flex-direction: row;
   justify-content: space-between;
   flex-wrap: wrap;
+  margin-bottom: $spacing-large;
   width: 60%;
 
   @media (max-width: 1240px) {

@@ -6,7 +6,7 @@ import InfoIcon from '@mui/icons-material/InfoOutlined';
 import { Checkbox, IconButton, Typography } from '@mui/material';
 import { isMobile } from 'react-device-detect';
 
-import './VehiclesTable.module.scss';
+import '/styles/components/VehiclesTable.module.scss';
 
 const defaultSizeProps = isMobile
   ? { minWidth: 160 }

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import styles from './Button.module.scss';
+import styles from '/styles/components/Button.module.scss';
 
 export default function Button({
   ariaLabel,

@@ -7,7 +7,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
-import styles from './VehicleFilters.module.scss';
+import styles from '/styles/components/VehicleFilters.module.scss';
 
 export default function VehicleFilters({ onOptionsChanged }) {
   const [filterOptions, setFilterOptions] = useState({});

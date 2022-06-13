@@ -23,7 +23,7 @@ import {
   Mail as MailIcon,
 } from '@mui/icons-material';
 
-import styles from './Header.module.scss';
+import styles from '/styles/layouts/Header.module.scss';
 import Image from 'next/image';
 
 const drawerWidth = 240;

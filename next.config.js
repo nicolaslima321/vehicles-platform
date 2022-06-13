@@ -1,4 +1,4 @@
-const path = require('node:path');
+const path = require('path');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -8,15 +8,10 @@ const nextConfig = {
       : 'http://localhost:8080/api',
   },
   reactStrictMode: true,
-  "compilerOptions": {
-    "baseUrl": "./",
-    "paths": {
-      "@/styles/*": ["styles/*"],
-    },
-  },
   sassOptions: {
-    prependData: `@import "@/styles/variables.scss";`,
-  }
-}
+    includePaths: [path.join(__dirname, 'styles')],
+    prependData: `@import "variables.scss";`,
+  },
+};
 
 module.exports = nextConfig

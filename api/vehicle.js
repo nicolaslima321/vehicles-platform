@@ -37,11 +37,11 @@ const vehicleApi = {
     }
   },
 
-  async update(params = { id }) {
+  async update(id, params) {
     const { apiUrl } = process.env;
 
     try {
-      await axios.patch(`${apiUrl}/vehicle/${id}`, { params });
+      await axios.patch(`${apiUrl}/vehicle/${id}`, { ...params });
       return true;
     } catch (error) {
       console.log(error);

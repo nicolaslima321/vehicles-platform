@@ -34,18 +34,16 @@ export default function Edition() {
 
   useEffect(() => {
     const canUpdateVehicle =
-      Boolean(selectedDriver && selectedDriver.id) &&
+      Boolean(selectedDriver && selectedDriverId) &&
       Boolean(plate) && Boolean(model) && Boolean(type) &&
       Boolean(capacity);
-
-    console.log(canUpdateVehicle);
 
     if (canUpdateVehicle) {
       setDisabled(false);
     } else {
       setDisabled(true);
     }
-  }, [selectedDriver, plate, model, type, capacity]);
+  }, [selectedDriver, selectedDriverId, plate, model, type, capacity]);
 
   const loadCurrentVehicle = async (id) => {
     const {
@@ -64,7 +62,7 @@ export default function Edition() {
   }
 
   const onUpdateVehicleClick = async (params) => {
-    const created = await vehicleApi.update(selectedDriver.id, params);
+    const created = await vehicleApi.update(selectedDriverId, params);
 
     if (created) {
       window.alert('Vehicle successfully updated!');
@@ -188,7 +186,7 @@ export default function Edition() {
         onClick={() => onUpdateVehicleClick()}
         disabled={disabled}
       >
-        {'Create Vehicle'}
+        {'Update Vehicle'}
       </Button>
     </div>
   )

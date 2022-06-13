@@ -5,7 +5,7 @@ const vehicleApi = {
     const { apiUrl } = process.env;
 
     try {
-      const { data: vehicles } = await axios.get(`${apiUrl}/vehicle`, { params: { filterOptions } });
+      const { data: vehicles } = await axios.get(`${apiUrl}/vehicle`, { params: filterOptions });
       return vehicles;
     } catch (error) {
       console.log(error);

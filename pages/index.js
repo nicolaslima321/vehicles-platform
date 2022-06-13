@@ -32,7 +32,7 @@ export default function Panel() {
     }
 
     if (!isLoadingVehicles && foundVehicles.length > 0) {
-      const mappedVehicles = foundVehicles.map((vehicle, index) => mountVehicleRow(vehicle));
+      const mappedVehicles = foundVehicles.map((vehicle) => mountVehicleRow(vehicle));
       setVehiclesRows(mappedVehicles);
     }
   }, [foundVehicles])
@@ -50,11 +50,11 @@ export default function Panel() {
     }
   }, [vehiclesSelected])
 
-  const mountVehicleRow = ({ creationDate, drivers, ...vehiclesProps }, index) => {
+  const mountVehicleRow = ({ creationDate, driver, ...vehiclesProps }) => {
     let driverIdentifier = '';
 
-    if (drivers && drivers.length > 0) {
-      const [{ id, firstName, lastName }] = drivers;
+    if (driver && driver.length > 0) {
+      const [{ id, firstName, lastName }] = driver;
       driverIdentifier = `${firstName} ${lastName} #${id}`;
     } else {
       // Reason: There are some Vehicles in the Database that doesnt have drivers
@@ -95,6 +95,7 @@ export default function Panel() {
     setIsLoadingVehicles(true);
 
     const vehicles = await vehicleApi.fetchAll(filterOptions);
+    console.log(vehicles);
 
     setFoundVehicles(vehicles);
     setIsLoadingVehicles(false);

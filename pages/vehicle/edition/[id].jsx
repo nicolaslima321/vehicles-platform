@@ -49,7 +49,7 @@ export default function Edition() {
 
   const loadCurrentVehicle = async (id) => {
     const {
-      drivers: [{ id: driverId }],
+      driver: [{ id: driverId }],
       plate,
       model,
       type,

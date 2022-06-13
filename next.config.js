@@ -12,7 +12,7 @@ const nextConfig = {
   reactStrictMode: true,
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
-    prependData: `@import "variables.module.scss";`,
+    prependData: `@import "variables.module.scss"; @import "globals.scss";`,
   },
 };
 

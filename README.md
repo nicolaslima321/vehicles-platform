@@ -25,6 +25,7 @@ npm install
 ```
 npm run dev
 ```
+- Application will be available in http://localhost:3000 it also will need to comunicate to the Back-End, so to configure the Back-End, follow the [API Doc](https://github.com/nicolaslima321/vehicles-platform-api).
 
 ### Tests/Lint
 - This topic will be commented in **"Things I could love to do"**

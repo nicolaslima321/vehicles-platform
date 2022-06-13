@@ -6,7 +6,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <div className={ styles.app }>
       <Header/>
-      <div className={ styles.appChildContainer }>
+      <div className={ styles['app__child-container'] }>
         <Component {...pageProps} />
       </div>
     </div>

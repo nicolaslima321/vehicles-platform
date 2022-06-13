@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 
 import { TextField, Typography } from '@mui/material';
-import Button from '../../components/Button/Button';
+import Button from '/components/Button/Button';
 
-import driverApi from '../../api/driver';
-import vehicleApi from '../../api/vehicle';
+import driverApi from '/api/driver';
+import vehicleApi from '/api/vehicle';
 
 import styles from '/styles/pages/vehicle/Creation.module.scss';
 

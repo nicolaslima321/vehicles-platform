@@ -66,7 +66,6 @@ export default function Panel() {
       ...vehiclesProps,
       creationDate: new Date(creationDate).toLocaleDateString(),
       driverIdentifier,
-      index,
     };
   }
 

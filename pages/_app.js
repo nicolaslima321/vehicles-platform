@@ -1,3 +1,4 @@
+import '../styles/globals.scss'
 import Header from '/layouts/Header/Header';
 import styles from '../styles/App.module.scss';
 

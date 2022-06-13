@@ -1,12 +1,8 @@
-import * as React from 'react';
 import { useState, useEffect } from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-import Popover from '@mui/material/Popover';
-import InfoIcon from '@mui/icons-material/InfoOutlined';
-import { Checkbox, IconButton, Typography } from '@mui/material';
-import { isMobile } from 'react-device-detect';
 
-import '/styles/components/VehiclesTable.module.scss';
+import { DataGrid } from '@mui/x-data-grid';
+import { IconButton, InfoOutlined as InfoIcon, Typography, Popover } from '@mui/material';
+import { isMobile } from 'react-device-detect';
 
 const defaultSizeProps = isMobile
   ? { minWidth: 160 }
@@ -29,7 +25,7 @@ export default function DataTable({ rows, resetVehicleTable, onVehicleSelection 
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handlePopOverClose = () => {
     setAnchorEl(null);
   };
 
@@ -52,7 +48,7 @@ export default function DataTable({ rows, resetVehicleTable, onVehicleSelection 
               id={id}
               open={open}
               anchorEl={anchorEl}
-              onClose={handleClose}
+              onClose={handlePopOverClose}
               anchorOrigin={{
                 vertical: 'center',
                 horizontal: 'right',

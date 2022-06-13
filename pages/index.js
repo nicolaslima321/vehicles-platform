@@ -1,16 +1,16 @@
-import Table from '/components/VehiclesTable/VehiclesTable';
-import Button from '/components/Button/Button';
-import { Skeleton } from '@mui/material';
-
 import { useRouter } from 'next/router'
 import { useEffect, useMemo, useState } from 'react'
-import axios from 'axios';
+
+import { Skeleton } from '@mui/material';
+import Table from '/components/VehiclesTable/VehiclesTable';
+import Button from '/components/Button/Button';
+import VehicleFilters from '/components/VehicleFilters/VehicleFilters';
+
+import vehicleApi from '/api/vehicle';
 
 import { isObjectsEqual, refreshArrayMemoryReference } from '/utils'
 
 import styles from '/styles/pages/Panel.module.scss';
-import VehicleFilters from '../components/VehicleFilters/VehicleFilters';
-import vehicleApi from '../api/vehicle';
 
 export default function Panel() {
   const [filterOptions, setFilterOptions] = useState({});
@@ -26,20 +26,19 @@ export default function Panel() {
 
   useEffect(() => {
     if (isFirstRendering) {
-      console.log('first rendering');
       setIsFirstRendering(false);
       searchVehicles()
     }
 
-    if (!isLoadingVehicles && foundVehicles.length > 0) {
+    const vehiclesAlreadyLoaded = !isLoadingVehicles && foundVehicles.length > 0;
+
+    if (vehiclesAlreadyLoaded) {
       const mappedVehicles = foundVehicles.map((vehicle) => mountVehicleRow(vehicle));
       setVehiclesRows(mappedVehicles);
     }
   }, [foundVehicles])
 
   useMemo(() => {
-    console.log('vehicles selected changed');
-
     const hasMoreThanOneVehicleSelected = vehiclesSelected.length > 1;
     const hasNoneVehicleSelected = vehiclesSelected.length === 0;
 

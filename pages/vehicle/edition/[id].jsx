@@ -1,10 +1,14 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
+
+import { TextField, Typography } from '@mui/material';
+
+import Button from '/components/Button/Button';
+
+import driverApi from '/api/driver';
+import vehicleApi from '/api/vehicle';
+
 import styles from '/styles/pages/vehicle/Edition.module.scss';
-import { Select, MenuItem, TextField, Typography } from '@mui/material';
-import driverApi from '../../../api/driver';
-import Button from '../../../components/Button/Button';
-import vehicleApi from '../../../api/vehicle';
 
 export default function Edition() {
   const [drivers, setDrivers] = useState({});
@@ -21,7 +25,6 @@ export default function Edition() {
   const router = useRouter();
 
   useEffect(() => {
-    console.log(router);
     const { id } = router.query;
 
     if (!Boolean(id)) {
@@ -134,34 +137,38 @@ export default function Edition() {
           <Typography sx={{ marginBottom: 2 }} variant="h5">Enter the Vehicle informations</Typography>
           <TextField
             className={styles['creation__field']}
-            onChange={(e) => handleChangePlate(e)}
-            value={plate}
             id="input-driverName"
             label="Plate of the vehicle"
+            onChange={(e) => handleChangePlate(e)}
+            sx={{ marginBottom: 2 }}
+            value={plate}
             variant="outlined"
           />
           <TextField
             className={styles['creation__field']}
-            onChange={(e) => handleChangeModel(e)}
-            value={model}
             id="input-driverName"
             label="The model of the vehicle"
+            onChange={(e) => handleChangeModel(e)}
+            sx={{ marginBottom: 2 }}
+            value={model}
             variant="outlined"
           />
           <TextField
             className={styles['creation__field']}
-            onChange={(e) => handleChangeType(e)}
-            value={type}
             id="input-driverName"
             label="Type of the vehicle"
+            onChange={(e) => handleChangeType(e)}
+            sx={{ marginBottom: 2 }}
+            value={type}
             variant="outlined"
           />
           <TextField
             className={styles['creation__field']}
-            onChange={(e) => handleChangeCapacity(e)}
-            value={capacity}
             id="input-driverName"
             label="Capacity of the vehicle"
+            onChange={(e) => handleChangeCapacity(e)}
+            sx={{ marginBottom: 2 }}
+            value={capacity}
             variant="outlined"
           />
         </section>
@@ -170,11 +177,12 @@ export default function Edition() {
           <Typography sx={{ marginBottom: 2 }} variant="h5">Enter the current Driver</Typography>
           <TextField
             className={styles['creation__field']}
-            onChange={(e) => handleChangeDriver(e)}
-            value={selectedDriverId}
             id="input-driverName"
             label="Driver ID"
+            onChange={(e) => handleChangeDriver(e)}
+            sx={{ marginBottom: 2 }}
             type="number"
+            value={selectedDriverId}
             variant="outlined"
           />
           {displayPhrase &&

@@ -3,7 +3,6 @@ import { useTheme } from '@mui/material/styles';
 
 import {
   Drawer,
-  CssBaseline,
   AppBar,
   Toolbar,
   List,

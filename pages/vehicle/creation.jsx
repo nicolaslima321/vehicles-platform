@@ -1,19 +1,22 @@
-import { useEffect, useMemo, useState } from 'react';
-import styles from '/styles/pages/vehicle/Creation.module.scss';
-import { Select, MenuItem, TextField, Typography } from '@mui/material';
-import driverApi from '../../api/driver';
+import { useEffect, useState } from 'react';
+
+import { TextField, Typography } from '@mui/material';
 import Button from '../../components/Button/Button';
+
+import driverApi from '../../api/driver';
 import vehicleApi from '../../api/vehicle';
 
+import styles from '/styles/pages/vehicle/Creation.module.scss';
+
 export default function Creation() {
-  const [drivers, setDrivers] = useState({});
-  const [selectedDriver, setSelectedDriver] = useState({});
-  const [displayPhrase, setDisplayPhrase] = useState(false);
-  const [disabled, setDisabled] = useState(true);
-  const [plate, setPlate] = useState('');
-  const [model, setModel] = useState('');
-  const [type, setType] = useState('');
   const [capacity, setCapacity] = useState('');
+  const [disabled, setDisabled] = useState(true);
+  const [displayPhrase, setDisplayPhrase] = useState(false);
+  const [drivers, setDrivers] = useState({});
+  const [model, setModel] = useState('');
+  const [plate, setPlate] = useState('');
+  const [selectedDriver, setSelectedDriver] = useState({});
+  const [type, setType] = useState('');
 
   useEffect(() => {
     loadDrivers();
@@ -24,8 +27,6 @@ export default function Creation() {
       Boolean(selectedDriver && selectedDriver.id) &&
       Boolean(plate) && Boolean(model) && Boolean(type) &&
       Boolean(capacity);
-
-    console.log(canCreateVehicle);
 
     if (canCreateVehicle) {
       setDisabled(false);
@@ -102,30 +103,34 @@ export default function Creation() {
           <Typography sx={{ marginBottom: 2 }} variant="h5">Enter the Vehicle informations</Typography>
           <TextField
             className={styles['creation__field']}
-            onChange={(e) => handleChangePlate(e)}
             id="input-driverName"
             label="Plate of the vehicle"
+            onChange={(e) => handleChangePlate(e)}
+            sx={{ marginBottom: 2 }}
             variant="outlined"
           />
           <TextField
             className={styles['creation__field']}
-            onChange={(e) => handleChangeModel(e)}
             id="input-driverName"
             label="The model of the vehicle"
+            onChange={(e) => handleChangeModel(e)}
+            sx={{ marginBottom: 2 }}
             variant="outlined"
           />
           <TextField
             className={styles['creation__field']}
-            onChange={(e) => handleChangeType(e)}
             id="input-driverName"
             label="Type of the vehicle"
+            onChange={(e) => handleChangeType(e)}
+            sx={{ marginBottom: 2 }}
             variant="outlined"
           />
           <TextField
             className={styles['creation__field']}
-            onChange={(e) => handleChangeCapacity(e)}
             id="input-driverName"
             label="Capacity of the vehicle"
+            onChange={(e) => handleChangeCapacity(e)}
+            sx={{ marginBottom: 2 }}
             variant="outlined"
           />
         </section>
@@ -134,9 +139,10 @@ export default function Creation() {
           <Typography sx={{ marginBottom: 2 }} variant="h5">Enter the current Driver</Typography>
           <TextField
             className={styles['creation__field']}
-            onChange={(e) => handleChangeDriver(e)}
             id="input-driverName"
             label="Driver ID"
+            onChange={(e) => handleChangeDriver(e)}
+            sx={{ marginBottom: 2 }}
             type="number"
             variant="outlined"
           />
@@ -155,9 +161,9 @@ export default function Creation() {
 
       <Button
         className={styles['creation__button']}
-        variant='filled'
-        onClick={() => onCreateVehicleClick()}
         disabled={disabled}
+        onClick={() => onCreateVehicleClick()}
+        variant='filled'
       >
         {'Create Vehicle'}
       </Button>

@@ -1,11 +1,9 @@
-import * as React from 'react';
 import { useState } from 'react';
 
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
+import { TextField, Typography } from '@mui/material/TextField';
 
 import styles from '/styles/components/VehicleFilters.module.scss';
 
@@ -19,7 +17,9 @@ export default function VehicleFilters({ onOptionsChanged }) {
     event.stopPropagation();
 
     const { target: { value: optionValue }} = event;
-    const newOptionsObject = overrideOptionsObject(filterOptions, { ...filterOptions, [optionKey]: optionValue });
+    const newOptionsObject =
+      overrideOptionsObject(filterOptions, { ...filterOptions, [optionKey]: optionValue });
+
     setFilterOptions(newOptionsObject);
 
     onOptionsChanged(filterOptions);
@@ -32,6 +32,7 @@ export default function VehicleFilters({ onOptionsChanged }) {
       <div className={styles['vehicle-filters__options']}>
         <div className={styles['vehicle-filters__options-group']}>
           <TextField
+            sx={{ marginBottom: 2 }}
             className={styles['vehicle-filters__option-field']}
             onChange={(e) => handleChange(e, 'driverName')}
             id="input-driverName"
@@ -39,6 +40,7 @@ export default function VehicleFilters({ onOptionsChanged }) {
             variant="outlined"
           />
           <TextField
+            sx={{ marginBottom: 2 }}
             className={styles['vehicle-filters__option-field']}
             onChange={(e) => handleChange(e, 'model')}
             id="input-model"
@@ -51,6 +53,7 @@ export default function VehicleFilters({ onOptionsChanged }) {
               value={filterOptions.creationDate}
               onChange={(e) => handleChange(e, 'creationDate')}
               renderInput={(params) => <TextField
+                sx={{ marginBottom: 2 }}
                 className={styles['vehicle-filters__option-field']}
                 id="input-creationDate"
                 {...params}
@@ -62,6 +65,7 @@ export default function VehicleFilters({ onOptionsChanged }) {
 
         <div className={styles['vehicle-filters__options-group']}>
           <TextField
+            sx={{ marginBottom: 2 }}
             className={styles['vehicle-filters__option-field-small']}
             onChange={(e) => handleChange(e, 'driverId')}
             id="input-driverId"
@@ -70,6 +74,7 @@ export default function VehicleFilters({ onOptionsChanged }) {
             variant="outlined"
           />
           <TextField
+            sx={{ marginBottom: 2 }}
             className={styles['vehicle-filters__option-field-small']}
             onChange={(e) => handleChange(e, 'vehicleId')}
             id="input-vehicleId"
@@ -78,6 +83,7 @@ export default function VehicleFilters({ onOptionsChanged }) {
             variant="outlined"
           />
           <TextField
+            sx={{ marginBottom: 2 }}
             className={styles['vehicle-filters__option-field-small']}
             onChange={(e) => handleChange(e, 'plate')}
             id="input-plate"
@@ -85,6 +91,7 @@ export default function VehicleFilters({ onOptionsChanged }) {
             variant="outlined"
           />
           <TextField
+            sx={{ marginBottom: 2 }}
             className={styles['vehicle-filters__option-field-small']}
             onChange={(e) => handleChange(e, 'type')}
             id="input-type"
@@ -92,6 +99,7 @@ export default function VehicleFilters({ onOptionsChanged }) {
             variant="outlined"
           />
           <TextField
+            sx={{ marginBottom: 2 }}
             className={styles['vehicle-filters__option-field-small']}
             onChange={(e) => handleChange(e, 'capacity')}
             id="input-capacity"

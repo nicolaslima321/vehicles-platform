@@ -129,14 +129,14 @@ export default function Edition() {
     (event) => setCapacity(event.target.value);
 
   return (
-    <div className={styles.creation}>
-      <Typography sx={{ alignSelf: 'center', marginBottom: 6 }} variant="h4">Create Vehicle</Typography>
+    <div className={styles.edition}>
+      <Typography sx={{ alignSelf: 'center', marginBottom: 6 }} variant="h4">Edit Vehicle</Typography>
 
-      <div className={styles['creation__field-group']}>
-        <section className={styles['creation__field-section']}>
+      <div className={styles['edition__field-group']}>
+        <section className={styles['edition__field-section']}>
           <Typography sx={{ marginBottom: 2 }} variant="h5">Enter the Vehicle informations</Typography>
           <TextField
-            className={styles['creation__field']}
+            className={styles['edition__field']}
             id="input-driverName"
             label="Plate of the vehicle"
             onChange={(e) => handleChangePlate(e)}
@@ -145,7 +145,7 @@ export default function Edition() {
             variant="outlined"
           />
           <TextField
-            className={styles['creation__field']}
+            className={styles['edition__field']}
             id="input-driverName"
             label="The model of the vehicle"
             onChange={(e) => handleChangeModel(e)}
@@ -154,7 +154,7 @@ export default function Edition() {
             variant="outlined"
           />
           <TextField
-            className={styles['creation__field']}
+            className={styles['edition__field']}
             id="input-driverName"
             label="Type of the vehicle"
             onChange={(e) => handleChangeType(e)}
@@ -163,7 +163,7 @@ export default function Edition() {
             variant="outlined"
           />
           <TextField
-            className={styles['creation__field']}
+            className={styles['edition__field']}
             id="input-driverName"
             label="Capacity of the vehicle"
             onChange={(e) => handleChangeCapacity(e)}
@@ -173,10 +173,10 @@ export default function Edition() {
           />
         </section>
 
-        <section className={styles['creation__field-section']}>
+        <section className={styles['edition__field-section']}>
           <Typography sx={{ marginBottom: 2 }} variant="h5">Enter the current Driver</Typography>
           <TextField
-            className={styles['creation__field']}
+            className={styles['edition__field']}
             id="input-driverName"
             label="Driver ID"
             onChange={(e) => handleChangeDriver(e)}
@@ -199,7 +199,7 @@ export default function Edition() {
       </div>
 
       <Button
-        className={styles['creation__button']}
+        className={styles['edition__button']}
         variant='filled'
         onClick={() => onUpdateVehicleClick()}
         disabled={disabled}

@@ -1,4 +1,4 @@
-.creation {
+.edition {
   align-content: center;
   display: flex;
   flex-direction: column;
@@ -9,7 +9,7 @@
   }
 }
 
-.creation__field {
+.edition__field {
   width: 100%;
   margin-bottom: $spacing-medium;
 
@@ -19,7 +19,7 @@
   }
 }
 
-.creation__field-group {
+.edition__field-group {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -30,7 +30,7 @@
   }
 }
 
-.creation__field-section {
+.edition__field-section {
   width: 45%;
 
   @media (max-width: $mobile-device) {
@@ -38,7 +38,7 @@
   }
 }
 
-.creation__button {
+.edition__button {
   margin-top: $spacing-medium;
   width: 25%;
 
